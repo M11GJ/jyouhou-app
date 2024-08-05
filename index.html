@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>クイズアプリ</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f0f0f0;
+    }
+    .question-container {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      max-width: 600px;
+      margin: auto;
+    }
+    .options button {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .options button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="question-container">
+    <div id="question"></div>
+    <div class="options" id="options"></div>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: "企業におけるITの目的として、最も適切なものを選びなさい。",
+        options: [
+          "娯楽の提供",
+          "従業員のモチベーション向上",
+          "効率化、省力化、迅速化",
+          "社会貢献"
+        ],
+        answer: "効率化、省力化、迅速化"
+      },
+      {
+        question: "DXの正式名称を以下の選択肢から選びなさい。",
+        options: [
+          "Digital Transmission",
+          "Digital Transformation",
+          "Data Transformation",
+          "Data Transmission"
+        ],
+        answer: "Digital Transformation"
+      },
+      {
+        question: "スマート農業で活用される技術として、最も適切なものを選びなさい。",
+        options: [
+          "VR（仮想現実）",
+          "IoT（モノのインターネット）",
+          "3Dプリンター",
+          "ブロックチェーン"
+        ],
+        answer: "IoT（モノのインターネット）"
+      },
+      {
+        question: "バーコードとQRコードの特徴について、正しい記述を選びなさい。",
+        options: [
+          "バーコードは二次元コード、QRコードは一次元コードである。",
+          "バーコードの方がQRコードよりも多くの情報を格納できる。",
+          "QRコードは、バーコードよりも読み取りエラーが発生しやすい。",
+          "QRコードは、スマートフォンなどで簡単に読み取ることができる。"
+        ],
+        answer: "QRコードは、スマートフォンなどで簡単に読み取ることができる。"
+      },
+      {
+        question: "RFIDの活用例として、適切なものを選びなさい。",
+        options: [
+          "商品の自動決済",
+          "図書館での本の貸出管理",
+          "ペットの個体識別",
+          "全て当てはまる"
+        ],
+        answer: "全て当てはまる"
+      },
+      {
+        question: "EAの目的として、最も適切なものを選びなさい。",
+        options: [
+          "企業の利益最大化",
+          "ITシステムの複雑化",
+          "IT戦略と業務戦略の整合",
+          "従業員満足度向上"
+        ],
+        answer: "IT戦略と業務戦略の整合"
+      },
+      {
+        question: "コンピュータで扱う数値の種類として、誤っているものを選びなさい。",
+        options: [
+          "整数",
+          "実数",
+          "文字列",
+          "論理値"
+        ],
+        answer: "文字列"
+      },
+      {
+        question: "2進数で1011を10進数に変換した値を選びなさい。",
+        options: [
+          "8",
+          "10",
+          "11",
+          "13"
+        ],
+        answer: "11"
+      },
+      {
+        question: "16進数でA3を2進数に変換した値を選びなさい。",
+        options: [
+          "10000011",
+          "10100011",
+          "11000011",
+          "11100011"
+        ],
+        answer: "10100011"
+      },
+      {
+        question: "文字コードのUnicodeについて、正しい記述を選びなさい。",
+        options: [
+          "英語のみを扱うための文字コードである。",
+          "日本語を扱うことはできない。",
+          "世界中の文字を統一的に扱うことができる。",
+          "ASCIIコードと互換性がない。"
+        ],
+        answer: "世界中の文字を統一的に扱うことができる。"
+      },
+      {
+        question: "デジタルデータの特徴として、適切なものを選びなさい。",
+        options: [
+          "複製が難しい",
+          "加工が難しい",
+          "劣化しやすい",
+          "検索や共有がしやすい"
+        ],
+        answer: "検索や共有がしやすい"
+      },
+      {
+        question: "画像の解像度について、正しい記述を選びなさい。",
+        options: [
+          "解像度が高いほど、画像ファイルのサイズは小さくなる。",
+          "解像度が低いほど、画像の品質は高くなる。",
+          "解像度は、画像を構成するピクセルの数で表される。",
+          "解像度は、画像の色深度を表す指標である。"
+        ],
+        answer: "解像度は、画像を構成するピクセルの数で表される。"
+      },
+      {
+        question: "コンピュータのCPUの役割として、最も適切なものを選びなさい。",
+        options: [
+          "データの保存",
+          "画像の表示",
+          "演算や制御",
+          "音声の出力"
+        ],
+        answer: "演算や制御"
+      },
+      {
+        question: "OSの役割として、適切なものを選びなさい。",
+        options: [
+          "Webページの表示",
+          "文書の作成",
+          "ハードウェアとソフトウェアの管理",
+          "ウイルス対策"
+        ],
+        answer: "ハードウェアとソフトウェアの管理"
+      },
+      {
+        question: "データベースの特徴として、適切なものを選びなさい。",
+        options: [
+          "大量のデータを効率的に扱える",
+          "データの整合性を保つ仕組みがある",
+          "データの検索や更新が容易",
+          "全て当てはまる"
+        ],
+        answer: "全て当てはまる"
+      },
+      {
+        question: "LANについて、正しい記述を選びなさい。",
+        options: [
+          "広域ネットワークのことである。",
+          "インターネットと同じ意味である。",
+          "比較的狭い範囲でのネットワークのことである。",
+          "無線通信は利用できない。"
+        ],
+        answer: "比較的狭い範囲でのネットワークのことである。"
+      },
+      {
+        question: "WANについて、正しい記述を選びなさい。",
+        options: [
+          "家の中など、狭い範囲でのネットワークのことである。",
+          "企業内ネットワークと同じ意味である。",
+          "広い地理的範囲をカバーするネットワークのことである。",
+          "有線通信のみで構築される。"
+        ],
+        answer: "広い地理的範囲をカバーするネットワークのことである。"
+      },
+      {
+        question: "無線LANのセキュリティ対策として、最も適切なものを選びなさい。",
+        options: [
+          "アクセスポイントの設置場所を公開する",
+          "暗号化方式を使用しない",
+          "誰でも接続できるようにSSIDを公開する",
+          "アクセスポイントへのパスワードを設定する"
+        ],
+        answer: "アクセスポイントへのパスワードを設定する"
+      },
+      {
+        question: "OSI基本参照モデルの第3層の名称を選びなさい。",
+        options: [
+          "アプリケーション層",
+          "データリンク層",
+          "ネットワーク層",
+          "トランスポート層"
+        ],
+        answer: "ネットワーク層"
+      },
+      {
+        question: "インターネットにおけるドメイン名の役割として、適切なものを選びなさい。",
+        options: [
+          "Webページの表示速度を向上させる",
+          "IPアドレスを人間が覚えやすい文字列で表現する",
+          "ネットワーク上のデータ通信を暗号化する",
+          "コンピュータウイルスの感染を防ぐ"
+        ],
+        answer: "IPアドレスを人間が覚えやすい文字列で表現する"
+      }
+    ];
+
+    let currentQuestionIndex = 0;
+
+    function displayQuestion() {
+      if (currentQuestionIndex < questions.length) {
+        const questionObj = questions[currentQuestionIndex];
+        document.getElementById('question').textContent = questionObj.question;
+        const optionsContainer = document.getElementById('options');
+        optionsContainer.innerHTML = '';
+        questionObj.options.forEach(option => {
+          const optionElement = document.createElement('button');
+          optionElement.textContent = option;
+          optionElement.addEventListener('click', () => checkAnswer(option));
+          optionsContainer.appendChild(optionElement);
+        });
+      } else {
+        document.getElementById('question').textContent = '全ての質問が終了しました。';
+        document.getElementById('options').innerHTML = '';
+      }
+    }
+
+    function checkAnswer(selectedOption) {
+      const questionObj = questions[currentQuestionIndex];
+      if (selectedOption === questionObj.answer) {
+        alert('正解です！');
+      } else {
+        alert(`不正解です。正解は: ${questionObj.answer}`);
+      }
+      currentQuestionIndex++;
+      displayQuestion();
+    }
+
+    document.addEventListener('DOMContentLoaded', displayQuestion);
+  </script>
+</body>
+</html>
